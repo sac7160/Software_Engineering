@@ -185,3 +185,77 @@ void ShowEnrolledEmploymentListUi::selectLookUpList(ShowEnrolledEmploymentList* 
             << ' ' << employments[index]->getDeadline() << endl << endl;
     }
 }
+/*
+Function : selectAppliance
+Description : print Appliance
+Return type :
+Parameters  : Appliance*
+*/
+void ApplianceUi::selectAppliance(Appliance* appliance)
+{
+    string companyNum;
+    fin >> companyNum;
+
+    CommonMember* currentLoginMember = (CommonMember*)memberList->getNowLoginMember();
+
+    fout << "4.2. 채용 지원" << endl;
+    Apply* apply = appliance->newApply(currentLoginMember, memberList, companyNum);
+    fout << "> " << apply->getCompanyName() << " " << apply->getCompanyNum() << " " << apply->getWork() << endl << endl;
+}
+/*
+Function : searchEmploymentList
+Description : print searchEmploymentList
+Return type :
+Parameters  : ShowEmploymentList*
+*/
+void ShowEmploymentListUi::searchEmploymentList(ShowEmploymentList* showEmploymentList)
+{
+    string companyName;
+    fin >> companyName;
+
+    int num = 0;
+    string companyNum;
+    cout << "num : " << num << endl;
+    fout << "4.1. 채용 정보 검색" << endl;
+    Employment** employments = showEmploymentList->showEmployments(memberList, companyName, num, companyNum);
+
+    cout << "num : " << num << endl;
+
+    for (int index = 0; index < num; index++)
+    {
+        cout << "while문 안";
+        fout << "> " << companyName << " " << companyNum << " " << employments[index]->getWork() << " " << employments[index]->getNumOfPeople()
+            << ' ' << employments[index]->getDeadline() << endl << endl;
+    }
+}
+/*
+Function : selectCompanyApplicationStat
+Description : print CompanyApplicaitonStat
+Return type :
+Parameters  :CompanyApplicationStat*
+*/
+void CompanyApplicationStatUi::selectCompanyApplicationStat(CompanyApplicationStat* companyApplicationStat)
+{
+    vector<pair<string, int>> applyNumforWork;
+    Company* currentLoginMember = (Company*)memberList->getNowLoginMember();
+
+    companyApplicationStat->getCompanyApplicaitonStat(currentLoginMember, applyNumforWork);
+    fout << "5.1. 지원 정보 통계" << endl;
+    for (int i = 0; i < applyNumforWork.size(); i++)
+    {
+        fout << "> " << applyNumforWork[i].first << " " << applyNumforWork[i].second << endl;
+    }
+    fout << endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
