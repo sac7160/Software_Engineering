@@ -1,3 +1,34 @@
+// 헤더 선언
+#include <fstream>
+#include <iostream>
+#include "RequirementSystem.h"
+
+using namespace std;
+
+// 상수 선언
+#define MAX_STRING 32
+#define INPUT_FILE_NAME "input.txt"
+#define OUTPUT_FILE_NAME "output.txt"
+
+// 함수 선언
+void doTask();
+void join();
+void withdrawal();
+void logIn();
+void logOut();
+void enrollEmployment();
+void showEnrolledEmploymentList();
+void showEmploymentList();
+void apply();
+void showApplyList();
+void cancelApply();
+void viewStat();
+void program_exit();
+
+// 변수 선언
+ifstream fin;
+ofstream fout;
+MemberList* memberList;
 /*
 Function : selectApplyInfo
 Description : print applyInfo
@@ -248,7 +279,280 @@ void CompanyApplicationStatUi::selectCompanyApplicationStat(CompanyApplicationSt
     fout << endl;
 }
 
+int main()
+{
+    fin.open(INPUT_FILE_NAME);
+    fout.open(OUTPUT_FILE_NAME);
+    
+    memberList = new MemberList;
 
+    doTask();
+ 
+    delete memberList;
+    return 0;
+}
+
+void doTask()
+{
+    // 메뉴 파싱을 위한 level 구분을 위한 변수
+    int menu_level_1 = 0, menu_level_2 = 0;
+    int is_program_exit = 0;
+
+    while (!is_program_exit)
+    {
+        // 입력파일에서 메뉴 숫자 2개를 읽기
+        fin >> menu_level_1 >> menu_level_2;
+
+        // 메뉴 구분 및 해당 연산 수행
+        switch (menu_level_1)
+        {
+        case 1:
+        {
+            switch (menu_level_2)
+            {
+            case 1:   // "1.1. 회원가입“ 메뉴 부분
+            {
+                // join() 함수에서 해당 기능 수행
+                join();
+
+                break;
+            }
+            case 2:
+            {
+                withdrawal();
+                break;
+            }
+            }
+            break;
+        }
+        case 2:
+        {
+            switch (menu_level_2)
+            {
+            case 1:
+            {
+                logIn();
+                break;
+            }
+            case 2:
+                logOut();
+                break;
+            }
+            break;
+        }
+        case 3:
+        {
+            switch (menu_level_2)
+            {
+            case 1:
+            {
+                enrollEmployment();
+                break;
+            }
+            case 2:
+            {
+                showEnrolledEmploymentList();
+                break;
+            }
+            }
+            break;
+        }
+        case 4:
+        {
+            switch (menu_level_2)
+            {
+            case 1:
+            {
+                showEmploymentList();
+                break;
+            }
+            case 2:
+            {
+                apply();
+                break;
+            }
+            case 3:
+            {
+                showApplyList();
+                break;
+            }
+            case 4:
+            {
+                cancelApply();
+                break;
+            }
+            }
+            break;
+        }
+        case 5:
+        {
+            switch (menu_level_2)
+            {
+            case 1:
+            {
+                viewStat();
+                break;
+            }
+            }
+            break;
+        }
+        case 6:
+        {
+            switch (menu_level_2)
+            {
+            case 1:   // "6.1. 종료“ 메뉴 부분
+            {
+                program_exit();
+                is_program_exit = 1;
+                break;;
+            }
+            return;
+            }
+        }
+        }
+    }
+}
+
+/*
+Function : join
+Description : generate SignUp
+Return type :
+Parameters  :
+*/
+void join()
+{
+    SignUp signUp;
+}
+
+/*
+Function : withdrawal
+Description : generate Withdrawal
+Return type :
+Parameters  :
+*/
+void withdrawal()
+{
+    Withdrawal withdrawal;
+}
+
+/*
+Function : logIn
+Description : generate  Login
+Return type :
+Parameters  :
+*/
+void logIn()
+{
+    Login logIn;
+}
+
+/*
+Function : logOut
+Description : generate  Logout
+Return type :
+Parameters  :
+*/
+void logOut()
+{
+    Logout logOut;
+}
+
+/*
+Function : enrollEmployment
+Description : generate  AddEmployment
+Return type :
+Parameters  :
+*/
+void enrollEmployment()
+{
+    AddEmployment addEmployment;
+}
+
+/*
+Function : showEnrolledEmploymentList
+Description : generate  ShowEnrolledEmploymentList
+Return type :
+Parameters  :
+*/
+void showEnrolledEmploymentList()
+{
+    ShowEnrolledEmploymentList showEnrolledEmploymentList;
+}
+
+/*
+Function : showEmploymentList
+Description : generate  ShowEmploymentList
+Return type :
+Parameters  :
+*/
+void showEmploymentList()
+{
+    ShowEmploymentList showEmployment;
+}
+
+/*
+Function : apply
+Description : generate Appliance
+Return type :
+Parameters  :
+*/
+void apply()
+{
+    Appliance appliance;
+}
+
+/*
+Function : showApplyList
+Description : generate ViewApplyList
+Return type :
+Parameters  :
+*/
+void showApplyList()
+{
+    ViewApplyList viewApplyList;
+}
+
+/*
+Function : cancelApply
+Description : generate CancelApply
+Return type :
+Parameters  :
+*/
+void cancelApply()
+{
+    CancelApply cancelApply;
+}
+
+/*
+Function : viewStat
+Description : generate CompanyApplicationStat or CommonApplicationStat
+Return type :
+Parameters  :
+*/
+void viewStat()
+{
+    if (memberList->getNowLoginMember()->getIsCompany())
+    {
+        CompanyApplicationStat companyApplicationStat;
+    }
+    else
+    {
+        CommonApplicationStat commonApplicationStat;
+    }
+}
+
+/*
+Function : program_exit
+Description : print exit and close file
+Return type :
+Parameters  :
+*/
+void program_exit()
+{
+    fout << "6.1. 종료" << endl;
+    fin.close();
+    fout.close();
+}
 
 
 
