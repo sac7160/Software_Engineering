@@ -124,8 +124,64 @@ void LoginUi::selectLogin(Login *login)
     fin >> id >> password;
     if (login->loginMember(memberList, id, password))
     {
-        fout << "2.1. ?��???" << endl;
+        fout << "2.1. ?¥á???" << endl;
         fout << "> " << id << ' ' << password << endl
              << endl;
+    }
+}
+
+/*
+Function : selectLogout
+Description : print logout
+Return type : 
+Parameters  : Logout*
+*/
+void LogoutUi::selectLogout(Logout* logout)
+{
+    fout << "2.2. 로그아웃" << endl;
+    string logoutId = logout->logoutMember(memberList);
+    fout << "> " << logoutId << endl << endl;
+}
+
+/*
+Function : selectAddEmployment
+Description : print addemployment
+Return type :
+Parameters  : AddEmployment*
+*/
+void AddEmploymentUi::selectAddEmployment(AddEmployment* addEmployment)
+{
+    string work, deadline;
+    int num;
+
+    fin >> work >> num >> deadline;
+
+    Company* currentLoginMember = (Company*)memberList->getNowLoginMember();
+
+    fout << "3.1. 채용 정보 등록" << endl;
+    addEmployment->addNewEmployment(currentLoginMember, work, num, deadline);
+    
+    fout << "> " << work << " " << num << " " << deadline << endl << endl;
+}
+
+/*
+Function : selectLookUpList
+Description : print enrolledemploymentlist
+Return type :
+Parameters  : ShowEnrolledEmploymentList*
+*/
+void ShowEnrolledEmploymentListUi::selectLookUpList(ShowEnrolledEmploymentList* showEnrolledEmploymentList)
+{
+    Company* currentLoginMember = (Company*)memberList->getNowLoginMember();
+    
+    int num=0;
+
+    fout << "3.2. 등록된 채용 정보 조회" << endl;
+    Employment** employments = showEnrolledEmploymentList->showList(currentLoginMember,num);    //개수 참조매개변수로 받음
+
+    for(int index=0; index<num; index++)
+    {   
+        fout << "> " << employments[index]->getWork() << " " << employments[index]->getNumOfPeople()
+            << ' ' << employments[index]->getDeadline() << endl << endl;
     }
 }
